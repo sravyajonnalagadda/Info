@@ -1,0 +1,11 @@
+[root@localhost html]# cd /root/.devops
+[root@localhost .devops]# ls
+deploy_app.sh
+[root@localhost .devops]# vi deploy_app.sh
+
+
+Backend Deployment steps:
+
+ cd /root/.devops
+deploy <service name>
+docker ps

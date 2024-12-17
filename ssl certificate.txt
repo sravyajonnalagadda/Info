@@ -1,0 +1,49 @@
+cd C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl
+
+C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl>openssl genrsa -des3 -out server.key 2048
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+
+C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl>openssl req -new -key server.key -sha256 -out server.csr
+Enter pass phrase for server.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:IN
+State or Province Name (full name) [Some-State]:TL
+Locality Name (eg, city) []:HYD
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:demo
+Organizational Unit Name (eg, section) []:IT
+Common Name (e.g. server FQDN or YOUR name) []:INFOVISIONLABS
+Email Address []:sravyaj02@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:jonnalagadda
+An optional company name []:demo
+
+C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl>openssl x509 -req -days 365 -in server.csr -signkey server.key -sha256 -out.server.crt
+Enter pass phrase for server.key:
+Certificate request self-signature ok
+subject=C = IN, ST = TL, L = HYD, O = demo, OU = IT, CN = INFOVISIONLABS, emailAddress = sravyaj02@gmail.com
+18590000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto\evp\evp_fetch.c:341:Global default library context, Algorithm (out.server.crt : 0), Properties (<null>)
+18590000:error:03000086:digital envelope routines:do_sigver_init:initialization error:crypto\evp\m_sigver.c:246:
+
+C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl>openssl x509 -req -days 365 -in server.csr -signkey server.key -sha256 -out.server.crt
+Enter pass phrase for server.key:
+Certificate request self-signature ok
+subject=C = IN, ST = TL, L = HYD, O = demo, OU = IT, CN = INFOVISIONLABS, emailAddress = sravyaj02@gmail.com
+D8050000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto\evp\evp_fetch.c:341:Global default library context, Algorithm (out.server.crt : 0), Properties (<null>)
+D8050000:error:03000086:digital envelope routines:do_sigver_init:initialization error:crypto\evp\m_sigver.c:246:
+
+C:\Users\sravya.jonnalagadda.INFOVISIONLABS\Desktop\ssl>openssl x509 -req -days 365 -in server.csr -signkey server.key -rsa-sha256 -out server.crt
+Enter pass phrase for server.key:
+Certificate request self-signature ok
+subject=C = IN, ST = TL, L = HYD, O = demo, OU = IT, CN = INFOVISIONLABS, emailAddress = sravyaj02@gmail.com
+140F0000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto\evp\evp_fetch.c:341:Global default library context, Algorithm (rsa-sha256 : 0), Properties (<null>)
+140F0000:error:1C80007A:Provider routines:rsa_setup_md:invalid digest:providers\implementations\signature\rsa_sig.c:315:rsa-sha256 could not be fetched
+140F0000:error:1C8000AE:Provider routines:rsa_setup_md:digest not allowed:providers\implementations\signature\rsa_sig.c:318:digest=rsa-sha256

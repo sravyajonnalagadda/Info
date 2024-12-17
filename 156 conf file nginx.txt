@@ -1,0 +1,107 @@
+worker processes 1;
+
+events {
+
+worker_connections  1024;
+
+}
+
+ http
+
+include       mime.types;
+
+    default_type  application/octet-stream;
+
+    server {
+
+            listen 80 default_server;
+
+            server_name _;
+
+            return 301 https://$host$request_uri;
+
+    }
+
+    server{
+
+        listen 443 ssl;
+
+        server_name localhost;
+
+        ssl_certificate server.crt;
+
+        ssl_certificate_key server.key;
+
+        ssl_session_timeout 5m;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        ssl_prefer_server_ciphers on;
+
+location / {
+
+            root html/crm-base;
+
+            index index.html;
+
+        }
+
+        location /crm-base {
+
+            try_files $uri $uri/ /index.html;
+
+        }
+
+        location /aas {
+
+                proxy_set_header  X-Real_IP $remote_addr;
+
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                proxy_set_header Host $http_host;
+
+                proxy_pass http://localhost:8089;
+
+        }
+
+        location /mdm {
+
+                proxy_set_header  X-Real_IP $remote_addr;
+
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                proxy_set_header Host $http_host;
+
+                proxy_pass http://localhost:8090;
+
+        }
+
+        location /ums {
+
+                proxy_set_header  X-Real_IP $remote_addr;
+
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                proxy_set_header Host $http_host;
+
+                proxy_pass http://localhost:8091;
+
+        }
+
+        location /ens {
+
+                proxy_set_header  X-Real_IP $remote_addr;
+
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                proxy_set_header Host $http_host;
+
+                proxy_pass http://localhost:8093;
+
+        }
+
+    }
+
+}

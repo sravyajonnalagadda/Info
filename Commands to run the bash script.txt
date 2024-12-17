@@ -1,0 +1,5 @@
+ chmod 755 deploy.sh
+
+bash deploy.s
+
+bash deploy.sh sravyaj02/frontend

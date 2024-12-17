@@ -1,0 +1,176 @@
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    # Redirect HTTP to HTTPS
+    server {
+        listen       80;
+        server_name  localhost;
+        return 301 https://$host$request_uri;
+    }
+
+    # Common SSL settings
+    ssl_certificate selfsign.crt;
+    ssl_certificate_key selfsign.key;
+    ssl_session_timeout 30m;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    sendfile on;
+
+    gzip on;
+    gzip_http_version 1.1;
+    gzip_disable "MSIE [1-6]\.";
+    gzip_min_length 256;
+    gzip_vary on;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_comp_level 9;
+
+    # CRM Base Application
+    server {
+        listen 443 ssl;
+        server_name localhost;
+
+        location / {
+            root html/crm-base;
+            index index.html;
+        }
+        location /crm-base {
+            try_files $uri $uri/ /index.html;
+	    }
+
+        location /aas {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8089;
+        }
+
+        location /mdm {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8090;
+        }
+
+        location /ums {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8091;
+        }
+
+        location /ens {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8093;
+        }
+
+        location /ies-batch {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8098;
+        }
+
+        location /config {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:5000;
+        }
+
+        location /ads {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8088;
+        }
+
+        location /sms/operations {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8095;
+        }
+
+        location /obs {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8096;
+        }
+    }
+
+    # Reports Application
+    server {
+        listen 8444 ssl;
+        server_name localhost;
+
+        location / {
+            root html/reports;
+            index index.html;
+        }
+        location /reports {
+            try_files $uri $uri/ /index.html;
+	    }
+
+        location /irs {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8092;
+        }
+    }
+
+    # Rules-engine Application
+    server {
+        listen 8443 ssl;
+        server_name localhost;
+
+        location / {
+            root html/rules-engine;
+            index index.html;
+        }
+        location /rules-engine {
+            try_files $uri $uri/ /index.html;
+	    }
+
+        location /ire {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8094;
+        }
+    }
+
+    # ivl-mdm Application
+    server {
+        listen 8445 ssl;
+        server_name localhost;
+
+        location / {
+            root html/ivl-mdm;
+            index index.html;
+        }
+        location /ivl-mdm {
+            try_files $uri $uri/ /index.html;
+	    }
+
+        location /ivl {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://localhost:8447;
+        }
+    }
+}

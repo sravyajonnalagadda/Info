@@ -1,0 +1,8 @@
+blue-4.saas-linux-small-amd64.runners
+
+docker east-c gce git-annex linux mongo mysql postgres ruby saas-linux-small-amd64 shared
+
+
+blue-1.saas-linux-small.runners
+
+blue-3.saas-linux-small-amd64.runners

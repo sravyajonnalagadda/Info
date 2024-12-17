@@ -1,0 +1,35 @@
+ls
+Deployment steps for frontend in JSW server using gitlab artifact:
+
+download the zipfile from mail crm-base.zip
+
+In IVL gitlab infovision-> artifact->frontend
+create a new directory called mileston-2 and in that uplaod a crm-basezip file to store in gitlab
+
+In jsw server
+cd git/
+cd artifact/
+ls
+git pull
+password for gitlab ivl
+ls -lart
+cd frontend
+ls
+cd milestone-2
+ls -lart
+git branch
+git status
+rm -rf crm-base
+ls
+unzip crm-base.zip
+ls
+cd /usr/share/nginx/html
+ls
+ls /root/artifact/frontend/milestone-2/
+rm -rf crm-base
+ls
+mv /root/artifact/frontend/milestone-2/crm-base .
+ls
+systemctl stop nginx
+systemctl start nginx
+systemctl status nginx

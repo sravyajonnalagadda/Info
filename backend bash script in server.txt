@@ -1,0 +1,72 @@
+#!/bin/bash
+
+########################################
+
+# Put this on a Server
+
+# run chmod +x deploy_app.sh to make the script executable
+
+# Execute this script:  ./deploy_app.sh docker-username/docker-appname:$TAG
+
+# Replace the $TAG with the actual Build Tag you want to deploy
+
+########################################
+
+set -e
+
+SERVICE_NAME=$1
+BACKEND_REGISTRY="registry.gitlab.com/infovision2023/jsw/common-services/backend"
+
+# Check for arguments
+
+if [[ $# -lt 1 ]] ; then
+    echo '[ERROR] You must enter service name to be deployed'
+    exit 1
+fi
+
+CONTAINER_NAME=$SERVICE_NAME
+
+if [[ $SERVICE_NAME == *":"* ]]; then
+    CI_IMAGE="$BACKEND_REGISTRY/$SERVICE_NAME"
+    CONTAINER_NAME=`echo $SERVICE_NAME | cut -d ':' -f1`
+else
+    CI_IMAGE="$BACKEND_REGISTRY/$SERVICE_NAME:latest"
+fi
+
+if [[ $CONTAINER_NAME == "mdm-service" ]]; then
+    PORT=8090
+elif [[ $CONTAINER_NAME == "ums-service" ]]; then
+    PORT=8091
+elif [[ $CONTAINER_NAME == "aas-service" ]]; then
+    PORT=8089
+elif [[ $CONTAINER_NAME == "ens-service" ]]; then
+    PORT=8093
+else
+echo '[ERROR] You must enter a valid service name to be deployed [ mdm-service | ums-service | ens-service | aas-service ]'
+    exit 1
+fi
+
+
+echo "Deploying $CONTAINER_NAME to Docker Container"
+
+
+#Check for running container & stop it before starting a new one
+
+if [ $(docker inspect -f '{{.State.Running}}' $CONTAINER_NAME) = "true" ]; then
+    docker stop $CONTAINER_NAME
+fi
+
+
+# Pull the latest image
+
+echo "Pulling latest image for $CI_IMAGE"
+
+docker pull $CI_IMAGE
+
+echo "Starting $CONTAINER_NAME using Docker Image name: $CI_IMAGE"
+
+docker run -d --rm=true -p "127.0.0.1:$PORT:$PORT" -e "SPRING_PROFILES_ACTIVE=dev" --name $CONTAINER_NAME $CI_IMAGE
+
+# Show the running processes
+
+docker ps

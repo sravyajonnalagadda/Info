@@ -1,0 +1,31 @@
+http {
+    server {
+        listen 8080;
+        root /Users/sravya.jonnalagadda.INFOVISIONLABS/Desktop/mysite;
+
+        location ~* /count/[0-9] {
+            root /Users/sravya.jonnalagadda.INFOVISIONLABS/Desktop/mysite;
+            try_files /index.html =404;
+        }
+
+        location /server1 {
+            root /Users/sravya.jonnalagadda.INFOVISIONLABS/Desktop/mysite;
+        }
+
+        location /port {
+            alias /Users/sravya.jonnalagadda.INFOVISIONLABS/Desktop/mysite/server1;
+        }
+
+        location /server2 {
+            root /Users/sravya.jonnalagadda.INFOVISIONLABS/Desktop/mysite;
+            try_files /server2/add.html /index.html =404;
+        }
+
+        location /crops {
+            return 307 /server1;  
+        }
+    } 
+}
+
+events {}
+

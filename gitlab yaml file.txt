@@ -1,0 +1,31 @@
+variables:
+  IMAGE: node:16.20.1-alpine
+  CI_REGISTRY_IMAGE: sravyaj02/frontend
+  
+stages:
+#  - build
+  - build-image
+
+#build-job:
+#  image: $IMAGE
+#  stage: build
+#  script:
+#    - echo "Compiling the code..."
+#    - npm install
+#    - npm install -g @angular/cli
+#    - ng build
+
+#  artifacts:
+#    paths:
+#    - dist/*
+
+build-image:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build-image
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE" .
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" $CI_REGISTRY
+    - docker push "$CI_REGISTRY_IMAGE"
+

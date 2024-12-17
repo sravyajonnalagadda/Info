@@ -1,0 +1,51 @@
+worker_processes  1;
+
+
+
+events {
+
+    worker_connections  1024;
+
+}
+
+
+
+
+
+http {
+
+    include       mime.types;    
+
+    default_type  application/octet-stream;
+
+
+
+    server{
+
+        listen 8440;
+
+        server_name localhost;
+
+
+
+        location / {
+
+            root html/crm-base;
+
+            index index.html;
+
+        }
+
+
+
+        location /crm-base {
+
+            try_files $uri $uri/ /index.html;
+
+        }
+
+         
+
+    }
+
+}

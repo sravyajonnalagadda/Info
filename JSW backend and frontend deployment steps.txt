@@ -1,0 +1,48 @@
+
+
+ps -ef | grep jar
+
+tail -100f mdm.out
+
+ctrl -D
+
+ps -ef | grep mdm
+
+kill -9 3846333
+
+ps -ef | grep mdm
+
+cd git/artifact/backend
+
+ls
+
+git pull
+
+cp mdm-service-0.0.1-SNAPSHOT.jar /root
+cd /root
+ls
+nohup java -jar -Dspring.profiles.default=jsw_dev mdm-service-0.0.1-SNAPSHOT.jar > mdm.out &
+
+ps -ef | grep mdm
+
+curl http://10.10.50.253:8090/mdm/units
+
+frontend:
+
+cd /root/git/artifact/frontend
+git pull
+
+cd /usr/share/nginx/html
+ls
+rm -rf crm-base crm-base.zip
+cp /root/git/artifact/frontend/crm-base.zip .
+unzip crm-base.zip
+systemctl stop nginx
+systemctl start nginx
+systemctl status nginx
+
+
+
+
+
+

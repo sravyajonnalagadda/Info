@@ -1,0 +1,67 @@
+1  docker ps
+    2  uname -a
+    3  clear
+    4  exit
+    5  pwd
+    6  sudo apt update
+    7  sudo yum update
+    8  df -h
+    9  ls
+   10  cat /etc/
+   11  cd /etc/
+   12  ls
+   13  cat os-release
+   14  yum update
+   15  sudo yum update
+   16  sudo yum upgrade
+   17  sudo dnf update -y
+   18  sudo dnf upgrade -y
+   19  sudo swapoff -a
+   20  sudo dnf install -y dnf-plugins-core
+   21  sudo dnf config-manager --add-repo=https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.28:/1.28.0/RHEL_8/devel:kubic:libcontainers:stable:cri-o:1.28:1.28.0.repo
+   22  sudo dnf install -y dnf-plugins-core
+   23  sudo dnf config-manager --add-repo=https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:/cri-o:/1.28:/1.28.0/CentOS_8/devel:kubic:libcontainers:stable:cri-o:1.28:1.28.0.repo
+   24  sudo dnf install -y cri-o
+   25  sudo systemctl enable crio
+   26  sudo systemctl start crio
+   27  cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+   28  [kubernetes]
+   29  name=Kubernetes
+   30  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+   31  enabled=1
+   32  gpgcheck=1
+   33  repo_gpgcheck=1
+   34  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   35  EOF
+   36  sudo dnf install -y kubelet kubeadm kubectl
+   37  sudo nano  /etc/yum.repos.d/kubernetes.repo
+   38  sudo dnf update -y
+   39  sudo dnf install openssl -y
+   40  sudo nano  /etc/yum.repos.d/kubernetes.repo
+   41  sudo echo > /etc/yum.repos.d/kubernetes.repo
+   42  sudo nano  /etc/yum.repos.d/kubernetes.repo
+   43  sudo yum install -y kubectl
+   44  sudo dnf install -y kubelet kubeadm
+   45  sudo systemctl enable kubelet
+   46  sudo systemctl stop firewalld
+   47  sudo systemctl disable firewalld
+   48  sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+   49  pwd
+   50   mkdir -p $HOME/.kube
+   51    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   52    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   53  kubectl get nodes
+   54  kubectl get nodes
+   55  kubectl get ns
+   56  kubectl get all
+   57  kubectl get deployment -n kube-system
+   58  kubectl get deployment -n kube-public
+   59  kubectl get deployment -n kube-node-lease
+   60  kubectl get deployment -n default
+   61  kubectl get deployment -n kube-system
+   62  kubectl get pods -n kube-system
+   63  kubectl describe kube-proxy-6g7q8 -n kube-system
+   64  kubectl describe po kube-proxy-6g7q8 -n kube-system
+   65  kubectl get pods -n kube-system
+   66  kubectl logs kube-proxy-6g7q8 -n kube-system
+   67  history
