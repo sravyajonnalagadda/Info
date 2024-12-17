@@ -1,0 +1,99 @@
+azure acr login
+
+docker login <login server of container registry>
+username :
+password:   <in accesskeys>
+
+> docker tag registry ivltestregistry.azurecr.io/registry:latest
+
+docker images
+docker push ivltestregistry.azurecr.io/registry:latest
+docker pull ivltestregistry.azurecr.io/registry:latest
+
+
+ 
+ - docker login https://<your-acr-login-server> --username <your-access-token>
+
+
+ C:\windows\system32> az acr login -n ivltestregistry --expose-token
+You can perform manual login using the provided access token below, for example: 'docker login loginServer -u 00000000-0000-0000-0000-000000000000 -p accessToken'
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlpCVlk6QlhBTjpURkZVOjNIWkw6TjQ2NTpKRlczOkpXN0w6TFlBVzpQNVNNOlJCUUc6S0szSDpZR1VEIn0.eyJqdGkiOiIzNmI4ZWVjZi1iMjljLTRmZDQtYjllZi1kZGUyNTM5NmQ2M2MiLCJzdWIiOiJsaXZlLmNvbSNzcmF2eWFpdmwxMjNAZ21haWwuY29tIiwibmJmIjoxNzAwNTgzNTAwLCJleHAiOjE3MDA1OTUyMDAsImlhdCI6MTcwMDU4MzUwMCwiaXNzIjoiQXp1cmUgQ29udGFpbmVyIFJlZ2lzdHJ5IiwiYXVkIjoiaXZsdGVzdHJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiMzZjYWUyMDFkZWRhNGZhN2E2ZmJlODFhNTNmN2U4OWYiLCJncmFudF90eXBlIjoicmVmcmVzaF90b2tlbiIsImFwcGlkIjoiMDRiMDc3OTUtOGRkYi00NjFhLWJiZWUtMDJmOWUxYmY3YjQ2IiwidGVuYW50IjoiNzA2ZjhmOTYtNjcxMS00ZTBlLWEwMTItYzNkYzBlZjg2M2FlIiwicGVybWlzc2lvbnMiOnsiQWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJtZXRhZGF0YS9yZWFkIiwiZGVsZXRlZC9yZWFkIl0sIk5vdEFjdGlvbnMiOm51bGx9LCJyb2xlcyI6W119.VBCKZvcY5LCATtMuY8A17p9qwJvn34yJS6HpyU2JamfTEbGkQYeJ0dp1XngYV_dS9Rm035-i4QfWzlITUXLc3kisAUWVWHe-DsWslRpAF1q2oAfNiXT9ljIUAdQNCltARrxhYmRSmibqHVH9nqZaes7wECxlURD3FVfyHzT8AJUPCCHZu4cGQT7KmaUum5C9sCSapAdOnttkprjMTnKjONV04SfNihJmOfBXj8LbmjY_YLhNEkPE14olY1px9Ybrsn6Aw2RHsT8YPcn7HzN3sQUdg5-PM26p3P2vlgI7NkzzPLCPP8G-VL7OBj47zEIy9_bHROohqSajrdQqJDO10A",
+  "loginServer": "ivltestregistry.azurecr.io"
+
+docker login ivltestregistry.azurecr.io -u eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlpCVlk6QlhBTjpURkZVOjNIWkw6TjQ2NTpKRlczOkpXN0w6TFlBVzpQNVNNOlJCUUc6S0szSDpZR1VEIn0.eyJqdGkiOiIzNmI4ZWVjZi1iMjljLTRmZDQtYjllZi1kZGUyNTM5NmQ2M2MiLCJzdWIiOiJsaXZlLmNvbSNzcmF2eWFpdmwxMjNAZ21haWwuY29tIiwibmJmIjoxNzAwNTgzNTAwLCJleHAiOjE3MDA1OTUyMDAsImlhdCI6MTcwMDU4MzUwMCwiaXNzIjoiQXp1cmUgQ29udGFpbmVyIFJlZ2lzdHJ5IiwiYXVkIjoiaXZsdGVzdHJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiMzZjYWUyMDFkZWRhNGZhN2E2ZmJlODFhNTNmN2U4OWYiLCJncmFudF90eXBlIjoicmVmcmVzaF90b2tlbiIsImFwcGlkIjoiMDRiMDc3OTUtOGRkYi00NjFhLWJiZWUtMDJmOWUxYmY3YjQ2IiwidGVuYW50IjoiNzA2ZjhmOTYtNjcxMS00ZTBlLWEwMTItYzNkYzBlZjg2M2FlIiwicGVybWlzc2lvbnMiOnsiQWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJtZXRhZGF0YS9yZWFkIiwiZGVsZXRlZC9yZWFkIl0sIk5vdEFjdGlvbnMiOm51bGx9LCJyb2xlcyI6W119.VBCKZvcY5LCATtMuY8A17p9qwJvn34yJS6HpyU2JamfTEbGkQYeJ0dp1XngYV_dS9Rm035-i4QfWzlITUXLc3kisAUWVWHe-DsWslRpAF1q2oAfNiXT9ljIUAdQNCltARrxhYmRSmibqHVH9nqZaes7wECxlURD3FVfyHzT8AJUPCCHZu4cGQT7KmaUum5C9sCSapAdOnttkprjMTnKjONV04SfNihJmOfBXj8LbmjY_YLhNEkPE14olY1px9Ybrsn6Aw2RHsT8YPcn7HzN3sQUdg5-PM26p3P2vlgI7NkzzPLCPP8G-VL7OBj47zEIy9_bHROohqSajrdQqJDO10A -p accessToken
+
+
+
+
+create azure account
+create resource group and container registry
+give a role assignment permission to your self for acr pull and acr push and reader
+from acr accesskeys enable admin user
+from local login to acr 
+azure acr login
+
+docker login <login server of container registry>
+username :
+password:   <in accesskeys>
+
+> docker tag registry ivltestregistry.azurecr.io/registry:latest
+docker tag registry registrytestdemo.azurecr.io/registry:latest
+
+docker images
+docker push ivltestregistry.azurecr.io/registry:latest
+docker pull ivltestregistry.azurecr.io/registry:latest
+
+From gitlab to acr login need to create a service principle
+
+
+
+Create a Service Principal:
+In the Azure portal, go to the Azure Active Directory.
+Navigate to "App registrations" and create a new application registration.
+Note down the Application (client) ID and Directory (tenant) ID.
+
+274c2072-bab9-43f4-9e4a-af7c0988b815 - client id
+706f8f96-6711-4e0e-a012-c3dc0ef863ae - tenent id
+
+Generate Client Secret:
+In the application registration you just created, go to "Certificates & Secrets" to generate a client secret.
+Save the secret value; you'll need it later.
+
+tAX8Q~gbwxOZdXrAFTWBKCwgQxqLhWjAHUr4ac49 - secret value
+
+Assign ACR Role to Service Principal:
+Go to your Azure Container Registry.Under "Access control (IAM)," assign the "AcrPull" role to your service principal.
+
+Retrieve Registry URL:
+Obtain the login server URL for your Azure Container Registry.
+
+Set GitLab CI/CD Variables:
+In your GitLab project, go to Settings > CI / CD > Variables.Add variables for AZURE_REGISTRY_URL, AZURE_REGISTRY_USERNAME (client ID), and AZURE_REGISTRY_PASSWORD (client secret).
+
+Update GitLab Pipeline Configuration:In your .gitlab-ci.yml file, use these variables to log in to ACR before pushing or pulling images.
+
+
+docker login https://<your-acr-login-server> --username <your-service-principal-client-id> --password <your-service-principal-client-secret>
+
+To remove mes_work_center_mst existing unique key constraint and add new unique key constraint
+
+
+- docker login -u "$AZURE_POC_SERVICE_PRINCIPAL_CLIENTID" -p "$AZURE_POC_SERVICE_PRINCIPAL_CLIENT_SECRET" "$ACR_LOGIN_SERVER"
+
+docker login https://ivltestregistry.azurecr.io --username "$AZURE_ACCESS_TOKEN"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
