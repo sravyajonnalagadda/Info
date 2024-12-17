@@ -1,0 +1,84 @@
+To run the applications in foreground mode:
+
+docker run --rm=true -it -e "SPRING_PROFILES_ACTIVE=dev" --name mdm-mfe -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/frontend/mdm-mfe:milestone-6-dev-latest
+
+Updated command to run the microservices in foregroundmode:
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name sap-simulator -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/sap-simulator-service:milestone-7-latest
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name idx-kafkaservice -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/idx-kafkaservice:milestone-6-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name mdm-service -v /jsw/nextgen-mes/logs:/var/log -v /jsw/nextgen-mes/sms/sops:/jsw/nextgen-mes/sms/sops registry.gitlab.com/infovision2023/jsw/common-services/backend/mdm-service:milestone-5-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name aas-service -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/aas-service:milestone-5-latest
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name sms-operation -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/sms-operation:milestone-5-latest
+
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name ums-service -v /jsw/nextgen-mes/logs:/var/log  registry.gitlab.com/infovision2023/jsw/common-services/backend/ums-service:milestone-3-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name ens-service -v /jsw/nextgen-mes/logs:/var/log  registry.gitlab.com/infovision2023/jsw/common-services/backend/ens-service:milestone-3-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name irs-service -v /jsw/nextgen-mes/logs:/var/log -v /jsw/nextgen-mes/reports:/var/reports registry.gitlab.com/infovision2023/jsw/common-services/backend/irs-service:milestone-3-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name spring-cloud-config-service -v /jsw/nextgen-mes/logs:/var/log  registry.gitlab.com/infovision2023/jsw/common-services/backend/spring-cloud-config-service:milestone-5-latest
+
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name ies-service -v /jsw/nextgen-mes/logs:/var/log  registry.gitlab.com/infovision2023/jsw/common-services/backend/ies-service:milestone-3-latest
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name ire-service -v /jsw/nextgen-mes/logs:/var/log  registry.gitlab.com/infovision2023/jsw/common-services/backend/ire-service:milestone-5-latest
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev.list --name sms-operation -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/sms-operation-service:milestone-7-latest
+
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=qa" --env-file qa.list --name ppc-crm-service -v /jsw/nextgen-mes/logs:/var/log registry.gitlab.com/infovision2023/jsw/common-services/backend/ppc-crm-service:milestone-6-latest
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Backend:
+
+aas-service:
+docker run --rm=true -it -p "127.0.0.1:8089:8089" -e "SPRING_PROFILES_ACTIVE=dev" --name aas-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/aas-service:milestone-3-latest
+
+mdm-service:
+docker run --rm=true -it -p "127.0.0.1:8090:8090" -e "SPRING_PROFILES_ACTIVE=dev" -e "SPRING_CONFIG_URL=https://10.0.3.156/config" --name mdm-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/mdm-service:milestone-3-latest
+
+docker run --rm=true -it -p "127.0.0.1:8090:8090" -e "SPRING_PROFILES_ACTIVE=dev" -e "SPRING_CONFIG_URL=https://10.0.3.156/config" --name mdm-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/mdm-service:milestone-3-latest
+
+ums-service:
+docker run --rm=true -it -p "127.0.0.1:8091:8091" -e "SPRING_PROFILES_ACTIVE=dev" --name ums-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/ums-service:milestone-3-latest
+
+ens-service:
+docker run --rm=true -it -p "127.0.0.1:8093:8093" -e "SPRING_PROFILES_ACTIVE=dev" --name ens-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/ens-service:milestone-3-latest
+
+ies-batch:
+docker run --rm=true -it -p "127.0.0.1:8098:8098" -e "SPRING_PROFILES_ACTIVE=dev" --name ies-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/ies-service:milestone-3-latest
+
+irs-service:
+docker run --rm=true -it -p "127.0.0.1:8092:8092" -e "SPRING_PROFILES_ACTIVE=dev" --name irs-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/irs-service:milestone-3-latest
+
+spring-cloud-config-service:
+docker run --rm=true -it -e "SPRING_PROFILES_ACTIVE=dev" --name spring-cloud-config-service "registry.gitlab.com/infovision2023/jsw/common-services/backend/spring-cloud-config-service:milestone-3-latest"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Frontend:mdm-mfe
+
+docker run --rm=true -it --name rules-engine-mfe "registry.gitlab.com/infovision2023/jsw/common-services/frontend/rules-engine-mfe:milestone-5-dev-latest"
+
+docker run --rm=true -it --name nextgen-mes "registry.gitlab.com/infovision2023/jsw/common-services/frontend/nextgen-mes:milestone-7-ubuntu_qa-latest"
+
+docker run --rm=true -it --name nextgen-mes "registry.gitlab.com/infovision2023/jsw/common-services/frontend/nextgen-mes:milestone-7-jsw_dev-latest"
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+

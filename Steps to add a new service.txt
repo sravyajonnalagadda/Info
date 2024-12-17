@@ -1,0 +1,20 @@
+In IVL SERVER:
+
+when ever the new application requests comes to deploy in server:
+
+Create a new repo in gitlab and create a milestone branch
+
+ 1] Clone the new service to local and 
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+JSW SERVER:
+
+Create a new repo in gitlab and create a milestone branch
+
+NOTE: 
+the portnb shld be different
+it should have jsw_dev profile name 
+
+after the code is pushed into repo setup a pipeline and run it once it done deploy the service in jsw server

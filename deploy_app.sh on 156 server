@@ -1,0 +1,75 @@
+#!/bin/bash
+########################################
+# Put this on a Server
+# run chmod +x deploy_app.sh to make the script executable
+# Execute this script:  ./deploy_app.sh appname:$TAG
+# Replace the $TAG with the actual Build Tag you want to deploy
+########################################
+set -e
+
+SERVICE_NAME=$1
+BACKEND_REGISTRY="registry.gitlab.com/infovision2023/jsw/common-services/backend"
+FRONTEND_REGISTRY="registry.gitlab.com/infovision2023/jsw/common-services/frontend"
+
+# Check for arguments
+
+if [[ $# -lt 1 ]] ; then
+    echo '[ERROR] You must enter service name to be deployed'
+    exit 1
+fi
+
+CONTAINER_NAME=$SERVICE_NAME
+
+if [[ $SERVICE_NAME == *":"* ]]; then
+    CONTAINER_NAME=`echo $SERVICE_NAME | cut -d ':' -f1`
+fi
+
+if [[ $CONTAINER_NAME == "mdm-mfe" ]]; then
+    CI_IMAGE="$FRONTEND_REGISTRY/$SERVICE_NAME"
+elif [[ $CONTAINER_NAME == "mdm-service" || $CONTAINER_NAME == "aas-service" || $CONTAINER_NAME == "ens-service" || $CONTAINER_NAME == "ums-service" || $CONTAINER_NAME == "ies-service" || $CONTAINER_NAME == "irs-service" || $CONTAINER_NAME == "spring-cloud-config-service" || $CONTAINER_NAME == "ire-service" || $CONTAINER_NAME == "sms-operation-service" ]]; then
+    CI_IMAGE="$BACKEND_REGISTRY/$SERVICE_NAME"
+else
+    echo '[ERROR] You must enter a valid service name to be deployed [ mdm-mfe | mdm-service | aas-service | ens-service | ums-service | ies-service | irs-service | spring-cloud-config-service | ire-service | sms-operation-service ]'
+    exit 1
+fi
+
+echo "Deploying $CONTAINER_NAME to Docker Container"
+
+#Check for running container & stop it before starting a new one
+
+if [ $(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME") = "true" ]; then
+    docker stop $CONTAINER_NAME
+fi
+
+# Pull the latest image
+
+echo "Pulling latest image for $CI_IMAGE"
+
+docker pull $CI_IMAGE
+
+echo "Starting $CONTAINER_NAME using Docker Image name: $CI_IMAGE"
+
+if [[ $CONTAINER_NAME == "mdm-service" ]]; then
+    docker run -d --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file /root/.devops/dev.list -v /jsw/nextgen-mes/logs/$CONTAINER_NAME:/var/log -v /jsw/nextgen-mes/sms/sops:/jsw/nextgen-mes/sms/sops --name $CONTAINER_NAME $CI_IMAGE 
+
+elif [[ $CONTAINER_NAME == "irs-service" ]]; then
+    docker run -d --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file /root/.devops/dev.list -v /jsw/nextgen-mes/logs/$CONTAINER_NAME:/var/log -v /jsw/nextgen-mes/reports:/var/reports --name $CONTAINER_NAME $CI_IMAGE
+
+else
+    if [[ $CONTAINER_NAME != "mdm-mfe" ]]; then
+
+        docker run -d --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file /root/.devops/dev.list -v /jsw/nextgen-mes/logs/$CONTAINER_NAME:/var/log -e JAVA_TOOL_OPTIONS="-Xms500M -Xmx500M" --name $CONTAINER_NAME $CI_IMAGE
+        
+    else
+        docker run -d --rm=true --network host -e "SPRING_PROFILES_ACTIVE=qa" --env-file /root/.devops/dev.list --name $CONTAINER_NAME $CI_IMAGE
+    fi
+fi
+
+# Show the running processes
+
+docker ps
+
+echo " "
+echo "#######################################################################################################################"
+echo "#######################################################################################################################"
+echo " "

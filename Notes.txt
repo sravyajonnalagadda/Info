@@ -1,0 +1,52 @@
+To give access or add a new port
+
+sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+sudo firewall-cmd --reload
+
+validation:
+sudo firewall-cmd --list-ports
+
+command to remove port:
+sudo firewall-cmd --remove-port=<port_number>/tcp --permanent
+sudo firewall-cmd --reload
+
+Command to delete docker images for disk space:
+
+docker image prune -a --filter "until=$(date -d '8 weeks ago' +%Y-%m-%dT%H:%M:%S)"
+
+
+
+nc -zv -w2 <ipaddress> <portnb>
+The command nc -zv -w2 10.10.2.97 1525 is used to perform a simple network connectivity.
+
+
+To check the hidden files :
+ls -ltrh
+
+To copy one file from one server to another server 
+scp -r filename administrator@10.0.3.161:/tmp/
+
+when deploy command doesnt work use
+source ~/.bash_rc
+
+cd /root/.devops
+
+vi .devops/deploy_app.sh
+
+
+to check the disk space
+df -h
+
+Extract the Archive:tar file
+tar -xzf jispl-monnet-report.tar.gz
+
+tar -xvzf 
+
+
+
+
+
+
+
+
+

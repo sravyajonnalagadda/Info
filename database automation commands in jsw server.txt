@@ -1,0 +1,7 @@
+psql -h localhost -U jsw_mes_app -d jsw_mes -v ON_ERROR_STOP=on -f /var/lib/pgsql/15/backups/01_CRM_Module_Milestone-1_Tables_Clean_Up_Data_JSW_Server_v1.2.sql &>jswclean1.log
+
+psql -h localhost -U jsw_mes_app -d jsw_mes -v ON_ERROR_STOP=on -f /var/lib/pgsql/15/backups/02_CRM_Module_Milestone-2_Tables_Clean_Up_Data_JSW_Server_v1.2.sql &>jswclean2.log
+
+psql -h localhost -U jsw_mes_app -d jsw_mes -v ON_ERROR_STOP=on -f /var/lib/pgsql/15/backups/03_CRM_Module_Milestone-1_Alter_Insert_Scripts_JSW_Server_v1.2.sql &>jswinsert1.log
+
+psql -h localhost -U jsw_mes_app -d jsw_mes -v ON_ERROR_STOP=on -f /var/lib/pgsql/15/backups/04_CRM_Module_Milestone-2_Alter_Insert_Scripts_JSW_Server_v1.2.sql &>jswinsert2.log

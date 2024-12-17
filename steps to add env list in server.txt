@@ -1,0 +1,33 @@
+create a new dev_mdm.list
+vi dev_mdm.list
+
+add the keyvalues 
+
+POSTGRES_DB_URL=jdbc:postgresql://10.0.3.157:5432/jsw_mes?currentSchema=mes&characterEncoding=UTF-8
+POSTGRES_USERNAME=jsw_mes_app
+POSTGRES_PASSWORD=jsw@123
+MONGODB_URL=mongodb://10.0.3.157:27017/jsw_mes
+MONGODB_USERNAME=jsw_mes_app
+MONGODB_PASSWORD=jsw@123
+REDIS_HOST=10.0.3.157
+REDIS_PORT=6379
+REDIS_PASSWORD=NyakTso9iyhVJsOSX2mcg
+REDIS_CONNECTION_LIMIT=200
+REDIS_DURATION_LIMIT=4
+SWAGGER_HOST=https://10.0.3.156
+MDM_SWAGGER_EMAIl=ragavendhra.g@infovision.com
+MDM_SWAGGER_DEV_DESCRIPTION=Server URL in Dev environment.
+
+save and comeout
+now go to cd /root/.devops open vi deploy_app.sh
+add --env-file /root/.devops/dev_mdm.list in docker run command like below
+
+docker run -d --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file /root/.devops/dev_mdm.list -v /jsw/nextgen-mes/sms/sops:/jsw/nextgen-mes/sms/sops --name mdm-service registry.gitlab.com/infovision2023/jsw/common-services/backend/mdm-service:milestone-3-latest
+
+next move dev_mdm.list file which we created in root folder to current folder which is .devops folder.
+mv ../dev_mdm.list .
+
+now deploy the latest ms3
+
+foregroundmode:
+docker run -it --rm=true --network host -e "SPRING_PROFILES_ACTIVE=dev" --env-file dev_mdm.list --name mdm-service registry.gitlab.com/infovision2023/jsw/common-services/backend/mdm-service:milestone-3-latest
